@@ -8,10 +8,10 @@ import torch.nn.functional as F
 import requests  # Import requests for downloading the model
 
 # Load JSON files
-with open('word_to_idx.json', 'r') as f:
+with open('Ques_1/streamlit/word_to_idx.json', 'r') as f:
     stoi = json.load(f)
 
-with open('idx_to_word.json', 'r') as f:
+with open('Ques_1/streamlit/idx_to_word.json', 'r') as f:
     itos = json.load(f)
 
 # Ensure you have the <unk> token defined
@@ -53,7 +53,7 @@ def download_model(url, model_path):
 # Function to load model
 def load_model(embedding_dim, context_len, activation):
     model_path = f"model_{activation}_{embedding_dim}_{context_len}.pth"  # Temporary local file
-    model_url = f"https://github.com/username/repository/releases/download/v1.0/{model_path}"  # Replace with your URL
+    model_url = f"https://github.com/Manasa2810/es335-fall-assignment-3/releases/download/v1.0/{model_path}"  # Replace with your URL
 
     # Initialize model with the original vocab size
     original_vocab_size = 16814  # Set this to the correct size
