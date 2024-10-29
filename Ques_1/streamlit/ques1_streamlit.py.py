@@ -7,7 +7,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 # Load JSON files
-with open('word_to_idx.json', 'r') as f:
+with open('Ques_1/streamlit/word_to_idx.json', 'r') as f:
     stoi = json.load(f)
 
 with open('idx_to_word.json', 'r') as f:
