@@ -41,15 +41,21 @@ class NextWordMLP(nn.Module):
 
 # Function to load model
 def load_model(embedding_dim, context_len, activation):
-    model_path = f"C:\\Users\\DELL ADMIN\\OneDrive - iitgn.ac.in\\Desktop\\ML\\ML_Assi_3\\model_{activation}_{embedding_dim}_{context_len}.pth"
-    
+    model_path = f"model_{activation}_{embedding_dim}_{context_len}.pth"  # Temporary local file
+    model_url = f"https://github.com/Manasa2810/es335-fall-assignment-3/releases/download/v1.0/{model_path}"  # Replace with your URL
+
     # Initialize model with the original vocab size
     original_vocab_size = 16814  # Set this to the correct size
     model = NextWordMLP(original_vocab_size, embedding_dim, 1024, context_len, activation).to(device)
 
-    # Load the model checkpoint
-    checkpoint = torch.load(model_path, map_location=device)
-    
+    try:
+        # Try to load the model directly
+        checkpoint = torch.load(model_path, map_location=device)
+    except FileNotFoundError:
+        print(f"{model_path} not found. Downloading from GitHub...")
+        download_model(model_url, model_path)
+        checkpoint = torch.load(model_path, map_location=device)
+
     # Print keys in the checkpoint to understand its structure
     print("Checkpoint keys:", checkpoint.keys())
 
@@ -58,7 +64,7 @@ def load_model(embedding_dim, context_len, activation):
         model.load_state_dict(checkpoint['state_dict'], strict=False)
     else:
         model.load_state_dict(checkpoint, strict=False)  # Load directly if no 'state_dict' key
-    
+
     model.eval()
     
     return model
