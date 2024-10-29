@@ -10,7 +10,7 @@ import torch.nn.functional as F
 with open('Ques_1/streamlit/word_to_idx.json', 'r') as f:
     stoi = json.load(f)
 
-with open('idx_to_word.json', 'r') as f:
+with open('Ques_1/streamlit/idx_to_word.json', 'r') as f:
     itos = json.load(f)
 
 # Ensure you have the <unk> token defined
