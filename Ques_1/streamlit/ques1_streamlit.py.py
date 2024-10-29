@@ -38,7 +38,14 @@ class NextWordMLP(nn.Module):
             x = F.tanh(self.lin1(x))
         x = self.lin2(x)
         return x
-
+def download_model(url, model_path):
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open(model_path, 'wb') as f:
+            f.write(response.content)
+        print(f"Model downloaded to {model_path}")
+    else:
+        print("Failed to download model")
 # Function to load model
 def load_model(embedding_dim, context_len, activation):
     model_path = f"model_{activation}_{embedding_dim}_{context_len}.pth"  # Temporary local file
