@@ -53,7 +53,7 @@ def download_model(url, model_path):
 # Function to load model
 def load_model(embedding_dim, context_len, activation):
     model_path = f"model_{activation}_{embedding_dim}_{context_len}.pth"  # Temporary local file
-    model_url = f"https://github.com/Manasa2810/es335-fall-assignment-3/releases/download/v1.0/{model_path}"  # Replace with your URL
+    model_url = f"https://github.com/Manasa2810/es335-fall-assignment-3/releases/download/Models/v1.0/{model_path}"  # Replace with your URL
 
     # Initialize model with the original vocab size
     original_vocab_size = 16814  # Set this to the correct size
