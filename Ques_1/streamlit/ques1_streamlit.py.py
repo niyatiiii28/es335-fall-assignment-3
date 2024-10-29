@@ -5,12 +5,13 @@ import re
 import numpy as np
 import torch.nn as nn
 import torch.nn.functional as F
+import requests  # Import requests for downloading the model
 
 # Load JSON files
-with open('Ques_1/streamlit/word_to_idx.json', 'r') as f:
+with open('word_to_idx.json', 'r') as f:
     stoi = json.load(f)
 
-with open('Ques_1/streamlit/idx_to_word.json', 'r') as f:
+with open('idx_to_word.json', 'r') as f:
     itos = json.load(f)
 
 # Ensure you have the <unk> token defined
@@ -38,6 +39,8 @@ class NextWordMLP(nn.Module):
             x = F.tanh(self.lin1(x))
         x = self.lin2(x)
         return x
+
+# Function to download model from GitHub
 def download_model(url, model_path):
     response = requests.get(url)
     if response.status_code == 200:
@@ -46,10 +49,11 @@ def download_model(url, model_path):
         print(f"Model downloaded to {model_path}")
     else:
         print("Failed to download model")
+
 # Function to load model
 def load_model(embedding_dim, context_len, activation):
     model_path = f"model_{activation}_{embedding_dim}_{context_len}.pth"  # Temporary local file
-    model_url = f"https://github.com/Manasa2810/es335-fall-assignment-3/releases/download/v1.0/{model_path}"  # Replace with your URL
+    model_url = f"https://github.com/username/repository/releases/download/v1.0/{model_path}"  # Replace with your URL
 
     # Initialize model with the original vocab size
     original_vocab_size = 16814  # Set this to the correct size
@@ -100,11 +104,6 @@ def preprocess_text(text):
 # Generate predictions
 import random
 
-import random
-
-import random
-import torch
-
 def predict_next_words(model, input_text, k=3, top_k=10, temperature=1.0, seed=None):
     # Set the random seed for reproducibility if provided
     if seed is not None:
@@ -142,9 +141,6 @@ def predict_next_words(model, input_text, k=3, top_k=10, temperature=1.0, seed=N
             x = torch.cat([x[:, 1:], next_word_idx_tensor], dim=1)
 
     return " ".join(generated_words)
-
-
-
 
 # Run prediction and display result
 if st.button("Predict"):
